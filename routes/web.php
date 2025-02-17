@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\IndividualPageController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,5 +21,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/home_page', HomePageController::class)->name('home_page');
+Route::get('/individual_page', IndividualPageController::class)->name('individual_page');
 
 require __DIR__.'/auth.php';

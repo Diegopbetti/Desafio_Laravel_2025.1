@@ -23,7 +23,7 @@
                     <span class="mr-1 text-right">$1500,00</span>  
                 </div>
                 <div class="flex justify-between w-full mt-4">
-                    <button class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Visualizar</button>                         
+                    <a href="{{ route('individual_page') }}" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Visualizar</a>                         
                     <button class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Comprar</button>
                 </div>
             </div>
