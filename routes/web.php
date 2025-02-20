@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\IndividualPageController;
+use App\Http\Controllers\UserManagementController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home_page', HomePageController::class)->name('home_page');
 Route::get('/individual_page', IndividualPageController::class)->name('individual_page');
+Route::get('/user_management', UserManagementController::class)->name('user_management');
 
 require __DIR__.'/auth.php';
