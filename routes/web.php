@@ -6,6 +6,7 @@ use App\Http\Controllers\IndividualPageController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProductManagementController;
 use App\Http\Controllers\WithdrawController;
+use App\Http\Controllers\PurchaseHistoryController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,6 @@ Route::get('/individual_page', IndividualPageController::class)->name('individua
 Route::get('/user_management', UserManagementController::class)->name('user_management');
 Route::get('/product_management', ProductManagementController::class)->name('product_management');
 Route::get('/withdraw', WithdrawController::class)->name('withdraw');
+Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
 
 require __DIR__.'/auth.php';
