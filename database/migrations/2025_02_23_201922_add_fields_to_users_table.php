@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable();
-            $table->string('telephone')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->string('cpf')->unique()->nullable();
+            $table->string('address')->required();
+            $table->string('telephone')->required();
+            $table->date('birth_date')->required();
+            $table->string('cpf')->unique()->required();
             $table->string('photo')->nullable();
-            $table->float('balance')->default(0);
+            $table->float('balance')->default(0)->required();
         });
     }
 

@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'address' => 'Default Address',
+            'telephone' => '00000000000',
+            'birth_date' => '2000-01-01',
+            'cpf' => '12345678900',
+            'balance' => 0,
         ]);
     }
 }
