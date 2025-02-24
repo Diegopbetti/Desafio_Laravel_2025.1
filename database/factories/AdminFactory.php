@@ -7,13 +7,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin>
  */
-class UserFactory extends Factory
+class AdminFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
     protected static ?string $password;
 
     /**
@@ -33,18 +30,8 @@ class UserFactory extends Factory
             'telephone' => $this->faker->phoneNumber(),
             'birth_date' => $this->faker->date(),
             'cpf' => $this->faker->unique()->numerify('###########'),
-            'photo' => $this->faker->optional()->imageUrl(),
-            'balance' => 0,
-        ];
-    }
+            'photo' => $this->faker->imageUrl(),
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        ];
     }
 }

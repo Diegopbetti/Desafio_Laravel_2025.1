@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Admin;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Test User',
@@ -24,6 +25,18 @@ class DatabaseSeeder extends Seeder
             'birth_date' => '2000-01-01',
             'cpf' => '12345678900',
             'balance' => 0,
+        ]);
+
+        Admin::factory(10)->create();
+        
+        Admin::factory()->create([
+            'name' => 'Vitao',
+            'email' => 'test2@example.com',
+            'password' => 'vwwwwwwww',
+            'address' => 'Default Address',
+            'telephone' => '00000000001',
+            'birth_date' => '2000-11-11',
+            'cpf' => '98765432100',
         ]);
     }
 }

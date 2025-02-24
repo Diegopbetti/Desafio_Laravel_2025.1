@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('telephone')->required();
             $table->date('birth_date')->required();
             $table->string('cpf')->unique()->required();
-            $table->string('photo')->nullable();
+            $table->string('photo')->required();
         });
     }
 
