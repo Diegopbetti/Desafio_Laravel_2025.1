@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Product;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        User::factory(18)->create();
 
         User::factory()->create([
             'name' => 'Test User',
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'balance' => 0,
         ]);
 
-        Admin::factory(10)->create();
+        Admin::factory(6)->create();
         
         Admin::factory()->create([
             'name' => 'Vitao',
@@ -38,5 +39,8 @@ class DatabaseSeeder extends Seeder
             'birth_date' => '2000-11-11',
             'cpf' => '98765432100',
         ]);
+
+        Product::factory(36)->create();
+
     }
 }
