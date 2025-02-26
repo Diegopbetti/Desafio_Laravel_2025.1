@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('birth_date')->required();
             $table->string('cpf')->unique()->required();
             $table->string('photo')->nullable();
-            $table->float('balance')->default(0)->required();
+            $table->decimal('balance')->default(0)->required();
         });
     }
 
