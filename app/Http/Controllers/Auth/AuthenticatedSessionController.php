@@ -16,6 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        
         return view('auth.login');
     }
 
@@ -23,23 +24,20 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        if(Auth::user() instanceof \App\Models\Admin){
-            return redirect()->intended(route('dashboard', absolute: false));
-        }
-        else {
-            return redirect()->intended(route('home_page', absolute: false));
-        }
+{
+    if (auth('web')->attempt($request->only(['email', 'password']))) {
+        return redirect()->route('home_page');
     }
+    else if (auth('admin')->attempt($request->only(['email', 'password']))) {
+        return redirect()->route('dashboard');
+    }
+    return back()->withErrors("Credenciais incorretas");
+}
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+        public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
