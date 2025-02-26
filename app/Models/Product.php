@@ -19,8 +19,10 @@ class Product extends Model
         'announcer_id',
     ];
 
-    public function announcer()
-    {
+    public function announcer(){
         return $this->belongsTo(User::class, 'announcer_id');
+    }
+    public function transactions(){
+        return $this->hasMany(Transaction::class, 'product_id');
     }
 }

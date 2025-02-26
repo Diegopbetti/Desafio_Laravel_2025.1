@@ -51,4 +51,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function announcer(){
+        return $this->hasMany(Product::class, 'announcer_id');
+    }
+    public function transactions(){
+        return $this->hasMany(Transaction::class, 'buyer_id');
+    }
 }
