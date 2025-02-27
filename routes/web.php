@@ -26,11 +26,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/home_page', HomePageController::class)->name('home_page');
-Route::get('/individual_page', IndividualPageController::class)->name('individual_page');
+Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
 Route::get('/user_management', UserManagementController::class)->name('user_management');
 Route::get('/product_management', ProductManagementController::class)->name('product_management');
 Route::get('/withdraw', WithdrawController::class)->name('withdraw');
 Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
 Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';    
