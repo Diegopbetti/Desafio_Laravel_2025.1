@@ -10,8 +10,23 @@
     <div class="flex justify-between items-center h-20 bg-blue-950 text-white w-full">
         <h1 class="text-3xl ml-10">TechMarket</h1>
         <div>
-            <button class="underline mr-2 transition-transform duration-300 hover:scale-110">Filtrar</button>
-            <input class="bg-blue-950 rounded-xl h-8 mr-10 " placeholder="Pesquisar"></input>
+            <form method="GET" action="{{ route('home_page') }}" class="flex items-center">
+                <select name="category" class="bg-blue-950 text-white rounded-xl h-10 mr-2 px-7 text-left pl-3">
+                    <option value="">Todas as categorias</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
+                            {{ ucfirst($category) }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <input type="text" name="search" value="{{ request('search') }}" 
+                    placeholder="Pesquisar" class="bg-blue-950 text-white rounded-xl h-10 px-3">
+
+                <button type="submit" class="underline ml-2 mr-10 transition-transform duration-300 hover:scale-110">
+                    Filtrar
+                </button>
+            </form>
         </div>
     </div>
     <div class="grid grid-cols-3 gap-x-5 gap-y-5 w-1/2 mt-12">
@@ -32,9 +47,25 @@
         @endforeach
     </div>
     <div class="flex justify-center m-8 w-full text-white">
-        <button class="bg-blue-950 mx-1 px-3 py-1 rounded-xl">1</button>
-        <button class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">2</button>
-        <button class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">3</button>
-        <button class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">4</button>
+    @if ($products->currentPage() > 1)
+        <a href="{{ $products->previousPageUrl() }}" class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">
+            <
+        </a>
+    @endif
+
+    @for ($i = 1; $i <= $products->lastPage(); $i++)
+        <a href="{{ $products->url($i) }}" 
+           class="mx-1 px-3 py-1 rounded-xl 
+                  {{ $products->currentPage() == $i ? 'bg-blue-950 text-white' : 'bg-blue-500' }}">
+            {{ $i }}
+        </a>
+    @endfor
+
+    @if ($products->hasMorePages())
+        <a href="{{ $products->nextPageUrl() }}" class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">
+            >
+        </a>
+    @endif
     </div>
+
 </body>

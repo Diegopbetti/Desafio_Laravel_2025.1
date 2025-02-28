@@ -7,9 +7,22 @@ use Illuminate\Http\Request;
 
 class HomePageController extends Controller
 {
-    public function __invoke(){
-        $products = Product::paginate(9);
+    public function index(Request $request){
+        $query = Product::query();
 
-        return view('home_page', compact('products'));
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category', $request->category);
+        }
+
+        $products = $query->paginate(9);
+
+        $categories = Product::select('category')->distinct()->pluck('category');
+
+
+        return view('home_page', compact('products', 'categories'));
     }
 }

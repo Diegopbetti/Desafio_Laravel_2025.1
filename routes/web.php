@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/home_page', HomePageController::class)->name('home_page');
+Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
 Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
 Route::get('/user_management', UserManagementController::class)->name('user_management');
 Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
