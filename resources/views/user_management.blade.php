@@ -13,7 +13,7 @@
             <h1 class=" text-white text-[24px] bg-blue-950 px-[10%] py-[1%] rounded-[20px] mb-5 whitespace-nowrap">
                 Gerenciamento de Usuários
             </h1>
-            <button class="p-[1%] text-[60px] leading-[25px] flex border-white mb-5 text-blue-950 cursor-pointer">
+            <button class="p-[1%] text-[60px] leading-[25px] flex border-white mb-5 text-blue-950 cursor-pointer" onclick="OpenModalCreate()">
                 +
             </button>
         </div>
@@ -44,9 +44,9 @@
                         <td class="px-3 py-2 text-center">{{$user->birth_date}}</td>
                         <td class="px-3 py-2 text-center">{{$user->cpf}}</td>
                         <td class="px-3 py-2 text-center">R${{$user->balance}}</td> -->
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer"></button></th>
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer"></button></th>
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="OpenModalRead()"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="OpenModalEdit()"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="OpenModalDelete()"></button></th>
                     </tr>
                     @endforeach
                 </tbody>
@@ -54,3 +54,4 @@
         </div>
     </main>
 </body>
+<script src=""></script>
