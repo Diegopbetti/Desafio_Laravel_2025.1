@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    @vite(['resources/css/app.css', 'resources/js/UserModal/createUser.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-<div id="create" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
+    <div id="create" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Criar Usuário</h2>
             <form action="@csrf">

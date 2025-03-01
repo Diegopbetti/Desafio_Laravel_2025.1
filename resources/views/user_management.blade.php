@@ -52,8 +52,12 @@
                 </tbody>
             </table>
         </div>
+        
+        @include('ModaisUser.modal_createUser')
+        @include('ModaisUser.modal_viewUser')
+        @include('ModaisUser.modal_editUser')
+        @include('ModaisUser.modal_deleteUser')
     </main>
-    @include('ModaisUser.modal_createUser')
     
     <script>
         function abrirModal(idModal){
