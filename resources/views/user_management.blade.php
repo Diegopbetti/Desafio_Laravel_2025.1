@@ -38,14 +38,8 @@
                         <td class="px-3 py-2 text-center">{{$user->id}}</td>
                         <td class="px-3 py-2 text-center">{{$user->name}}</td>
                         <td class="px-3 py-2 text-center">{{$user->email}}</td>
-                        <!-- <td class="px-3 py-2 text-center">********</td>
-                        <td class="px-3 py-2 text-center">{{$user->address}}</td>
-                        <td class="px-3 py-2 text-center">{{$user->telephone}}</td>
-                        <td class="px-3 py-2 text-center">{{$user->birth_date}}</td>
-                        <td class="px-3 py-2 text-center">{{$user->cpf}}</td>
-                        <td class="px-3 py-2 text-center">R${{$user->balance}}</td> -->
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('view')"></button></th>
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('edit')"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('view-{{ $user->id }}')"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('edit-{{ $user->id }}')"></button></th>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete')"></button></th>
                     </tr>
                     @endforeach

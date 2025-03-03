@@ -20,8 +20,8 @@
                     <input type="date" placeholder="Birth date" class="border p-2 w-1/3 mb-2 rounded" required>
                     <input type="text" placeholder="CPF" class="border p-2 w-2/3 mb-2 rounded" required>
                 </div>
-                <input type="number" placeholder="Balance" class="border p-2 w-full mb-2 rounded" required>
-                <input type="file" placeholder="Phoyo" class="border p-2 w-full mb-2 rounded">
+                <input type="number" placeholder="Balance" class="border p-2 w-full mb-2 rounded" type="number" min="0" required>
+                <input type="file" placeholder="Photo" class="border p-2 w-full mb-2 rounded">
 
                 <div class="flex justify-end mt-4">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded transition-transform hover:scale-105">
