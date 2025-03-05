@@ -8,10 +8,12 @@
 </head>
 <body>
     <div id="delete" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="bg-white p-6 rounded-lg w-48 shadow-lg">
+        <div class="bg-white p-6 rounded-lg w-42 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Excluir Usuário</h2>
-            <form action="@csrf">
-                <div class="flex justify-end mt-4">
+            <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+                <div class="flex justify-between mt-4">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded transition-transform hover:scale-105">
                         Excluir
                     </button>
@@ -23,4 +25,4 @@
         </div>
     </div>
 </body>
-</html>
+</ht

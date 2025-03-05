@@ -10,18 +10,19 @@
     <div id="create" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Criar Usuário</h2>
-            <form action="@csrf">
-                <input type="text" placeholder="Name" class="border p-2 w-full mb-2 rounded" required>
-                <input type="email" placeholder="Email" class="border p-2 w-full mb-2 rounded" required>
-                <input type="password" placeholder="Password" class="border p-2 w-full mb-2 rounded" required>
-                <input type="text" placeholder="Address" class="border p-2 w-full mb-2 rounded" required>
-                <input type="tel" placeholder="Telephone" class="border p-2 w-full mb-2 rounded" pattern="[0-9]{10,11}" required>
+            <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+                <input type="text" name="name" placeholder="Name" class="border p-2 w-full mb-2 rounded" required>
+                <input type="email" name="email" placeholder="Email" class="border p-2 w-full mb-2 rounded" required>
+                <input type="password" name="password" placeholder="Password" class="border p-2 w-full mb-2 rounded" required>
+                <input type="text" name="address" placeholder="Address" class="border p-2 w-full mb-2 rounded" required>
+                <input type="tel" name="telephone" placeholder="Telephone" class="border p-2 w-full mb-2 rounded" pattern="[0-9]{10,11}" required>
                 <div class="flex">
-                    <input type="date" placeholder="Birth date" class="border p-2 w-1/3 mb-2 rounded" required>
-                    <input type="text" placeholder="CPF" class="border p-2 w-2/3 mb-2 rounded" required>
+                    <input type="date" name="birth_date" placeholder="Birth date" class="border p-2 w-1/3 mb-2 rounded" required>
+                    <input type="text" name="cpf" placeholder="CPF" class="border p-2 w-2/3 mb-2 rounded" required>
                 </div>
-                <input type="number" placeholder="Balance" class="border p-2 w-full mb-2 rounded" type="number" min="0" required>
-                <input type="file" placeholder="Photo" class="border p-2 w-full mb-2 rounded">
+                <input type="number" name="balance" placeholder="Balance" class="border p-2 w-full mb-2 rounded" type="number" min="0" required>
+                <input type="file" name="photo" placeholder="Photo" class="border p-2 w-full mb-2 rounded">
 
                 <div class="flex justify-end mt-4">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded transition-transform hover:scale-105">

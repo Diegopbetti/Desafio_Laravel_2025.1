@@ -27,8 +27,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
 Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
-Route::get('/user_management', [UserManagementController::class, '__invoke'])->name('user_management');
-Route::post('/user/{id}', [UserManagementController::class, 'update'])->name('user_management');
+
+Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
+Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
+Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
+Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
+
 Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
 Route::get('/withdraw', WithdrawController::class)->name('withdraw');
 Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');

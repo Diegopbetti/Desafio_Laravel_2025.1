@@ -46,6 +46,27 @@
                 </tbody>
             </table>
         </div>
+        <div class="flex justify-center m-8 w-full text-white">
+        @if ($users->currentPage() > 1)
+            <a href="{{ $users->previousPageUrl() }}" class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">
+                <
+            </a>
+        @endif
+
+        @for ($i = 1; $i <= $users->lastPage(); $i++)
+            <a href="{{ $users->url($i) }}" 
+            class="mx-1 px-3 py-1 rounded-xl 
+                    {{ $users->currentPage() == $i ? 'bg-blue-950 text-white' : 'bg-blue-500' }}">
+                {{ $i }}
+            </a>
+        @endfor
+
+        @if ($users->hasMorePages())
+            <a href="{{ $users->nextPageUrl() }}" class="bg-blue-500 mx-1 px-3 py-1 rounded-xl">
+                >
+            </a>
+        @endif
+        </div>
         
         @include('ModaisUser.modal_createUser')
         @include('ModaisUser.modal_viewUser')
