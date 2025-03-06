@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('photo');
             $table->string('name');
             $table->decimal('price');
-            $table->integer('quantity');
+            $table->integer('quantity')->default(1);
             $table->string('description');
             $table->string('category');
             $table->unsignedBigInteger('announcer_id');

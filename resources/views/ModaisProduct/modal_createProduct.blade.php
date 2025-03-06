@@ -12,7 +12,7 @@
             <h2 class="text-xl font-bold mb-4">Criar Produto</h2>
             <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="file" name="photo" placeholder="Photo" class="border p-2 w-full mb-2 rounded">
+                <input type="file" name="photo" placeholder="Photo" class="border p-2 w-full mb-2 rounded" required>
                 <input type="text" name="name" placeholder="Name" class="border p-2 w-full mb-2 rounded" required>
                 <div class="flex">
                     <input type="text" name="category" placeholder="Category" class="border p-2 w-1/2 mb-2 rounded" required>
