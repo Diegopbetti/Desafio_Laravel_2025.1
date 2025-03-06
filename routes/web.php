@@ -34,6 +34,10 @@ Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('use
 Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
+Route::post('/product', [ProductManagementController::class, 'store'])->name('product.store');
+Route::put('/product/{id}', [ProductManagementController::class, 'update'])->name('product.update');
+Route::delete('/product/{id}', [ProductManagementController::class, 'destroy'])->name('product.destroy');
+
 Route::get('/withdraw', WithdrawController::class)->name('withdraw');
 Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
 Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
