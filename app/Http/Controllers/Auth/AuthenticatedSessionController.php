@@ -14,9 +14,10 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(): View | RedirectResponse
     {
-        
+        if(Auth::guard('admin')->check())
+            return redirect()->route('dashboard');
         return view('auth.login');
     }
 
@@ -31,7 +32,7 @@ class AuthenticatedSessionController extends Controller
     else if (auth('admin')->attempt($request->only(['email', 'password']))) {
         return redirect()->route('dashboard');
     }
-    return back()->withErrors("Credenciais incorretas");
+    return back()->withErrors(['email' => "Credenciais incorretas"]);
 }
 
     /**
@@ -39,7 +40,12 @@ class AuthenticatedSessionController extends Controller
      */
         public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        if(Auth::guard('web')->check()){
+            Auth::guard('web')->logout();
+        }
+        if(Auth::guard('admin')->check()){
+            Auth::guard('admin')->logout();
+        }
 
         $request->session()->invalidate();
 
