@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'birth_date' => $this->faker->date(),
             'cpf' => $this->faker->unique()->numerify('###########'),
             'photo' => $this->faker->optional()->imageUrl(),
-            'balance' => 0,
+            'balance' => $this->faker->randomFloat(2, 0, 10000),
         ];
     }
 

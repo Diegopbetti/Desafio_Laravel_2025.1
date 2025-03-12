@@ -21,10 +21,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth:admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard'); 
+        return view('admin.dashboard');
+    })->middleware('admin')->name('admin.dashboard'); 
 });
 
 Route::middleware('auth')->group(function () {
@@ -55,6 +55,8 @@ Route::put('/product/{id}', [ProductManagementController::class, 'update'])->nam
 Route::delete('/product/{id}', [ProductManagementController::class, 'destroy'])->name('product.destroy');
 
 Route::get('/withdraw', WithdrawController::class)->name('withdraw');
+Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.process');
+
 Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
 Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
 

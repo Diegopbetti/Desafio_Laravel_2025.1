@@ -23,7 +23,6 @@
                     <input type="date" name="birth_date" placeholder="Birth date" class="border p-2 w-1/3 mb-2 rounded" value="{{$user->birth_date}}" required>
                     <input type="text" name="cpf" placeholder="CPF" class="border p-2 w-2/3 mb-2 rounded" value="{{$user->cpf}}" required>
                 </div>
-                <input type="number" name="balance" placeholder="Balance" class="border p-2 w-full mb-2 rounded" value="{{$user->balance}}" type="number" min="0" required>
                 <div class="mb-2 flex justify-between items-center">
                     <div class="flex items-center">
                         <input type="file" name="photo" placeholder="Photo" class="border p-2 w-full mb-2 rounded">

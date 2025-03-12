@@ -33,7 +33,7 @@ class UserManagementController extends Controller
         $user->telephone = $request->telephone;
         $user->birth_date = $request->birth_date;
         $user->cpf = $request->cpf; 
-        $user->balance = $request->balance;
+        $user->balance = 0;
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('images/users', 'public');
