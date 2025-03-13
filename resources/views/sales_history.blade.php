@@ -27,14 +27,30 @@
                     </tr>
                 </thead>
                 <tbody class="bg-blue-950">
-                    <tr class="border-b border-gray-600">
-                        <td class="px-3 py-2 text-center">Nokia</td>
-                        <td class="px-3 py-2 text-center"><button class="btn-acao bg-[#ffffff] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer"></button></td>
-                        <td class="px-3 py-2 text-center">12/10/2025</td>
-                        <td class="px-3 py-2 text-center">R$4000,00</td>
-                        <td class="px-3 py-2 text-center"><button class="btn-acao bg-[#000000] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer"></button></td>
-                
-                    </tr>
+                    @foreach ($sales as $sale)
+                        <tr class="border-b border-gray-600">
+                            <td class="px-3 py-2 text-center">{{ $sale->product->name }}</td>
+                            <td class="px-3 py-2 text-center flex justify-center items-center">
+                                <button class="bg-[#ffffff] w-[30px] h-[30px] rounded-md flex items-center justify-center cursor-pointer" onclick="abrirModal('modal-{{ $sale->id }}')">
+                                    🔍
+                                </button>
+                            </td>
+                            <td class="px-3 py-2 text-center">{{ $sale->date->format('d/m/Y') }}</td>
+                            <td class="px-3 py-2 text-center">R${{ number_format($sale->total_price, 2, ',', '.') }}</td>
+                            <td class="px-3 py-2 text-center">
+                                <a href="#" class="bg-black text-white px-4 py-2 rounded-md">Ver</a>
+                            </td>
+                        </tr> 
+                        <div id="modal-{{ $sale->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center">
+                            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+                                <img src="{{ asset($sale->product->photo) }}" alt="Product Image" class="w-96 mr-12 h-auto rounded-md">
+                                <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md" 
+                                    onclick="fecharModal('modal-{{ $sale->id }}')">
+                                    Fechar
+                                </button>
+                            </div>
+                        </div>  
+                    @endforeach
                 </tbody>
             </table>
         </div>

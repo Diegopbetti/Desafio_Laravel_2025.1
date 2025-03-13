@@ -10,10 +10,14 @@ class Transaction extends Model
         'reference_id',
         'product_id',
         'buyer_id',
+        'seller_id',
         'product_quantity',
         'total_price',
-        'status',
         'date',
+    ];
+
+    protected $casts = [
+        'date' => 'datetime',
     ];
 
     public function product(){
@@ -22,5 +26,9 @@ class Transaction extends Model
 
     public function user(){
         return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    public function seller(){
+        return $this->belongsTo(User::class, 'seller_id');
     }
 }

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('reference_id')->unique(); 
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('buyer_id');
+            $table->unsignedBigInteger('seller_id');
             $table->unsignedInteger('product_quantity');
             $table->decimal('total_price', 10, 2);
-            $table->tinyInteger('status')->default(1);
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
 
@@ -28,6 +28,11 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table->foreign('buyer_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('seller_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

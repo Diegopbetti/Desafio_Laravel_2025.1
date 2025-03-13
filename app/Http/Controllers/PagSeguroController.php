@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class PagSeguroController extends Controller
-{
+{   
     public function createCheckout(Request $request)
     {
         // Validação dos dados
@@ -22,6 +22,16 @@ class PagSeguroController extends Controller
 
         // Calcula o preço total
         $totalPrice = $product->price * $request->input('quantity');
+
+        $transaction = Transaction::create([
+            'reference_id' => uniqid(), // Criando ID único
+            'product_id' => $product->id,
+            'buyer_id' => auth()->id(),
+            'seller_id' => $product->announcer_id,
+            'product_quantity' => $request->input('quantity'),
+            'total_price' => $totalPrice,
+            'date' => now(),
+        ]);
 
         // Configurações do PagSeguro
         $url = config('services.pagseguro.checkout_url');
@@ -47,15 +57,8 @@ class PagSeguroController extends Controller
 
         // Verifica se a requisição foi bem-sucedida
         if ($response->successful()) {
-            // Cria a transação no banco de dados
-            Transaction::create([
-                'reference_id' => $response->json()['reference_id'],
-                'product_id' => $product->id, // Produto comprado
-                'buyer_id' => auth()->id(), // Usuário autenticado
-                'product_quantity' => $request->input('quantity'), // Quantidade
-                'total_price' => $totalPrice, // Preço total
-                'status' => 1, // Status inicial (pendente)
-                'date' => now(), // Data da transação
+            $transaction->update([
+                'reference_id'=> $response->json()['reference_id'],
             ]);
 
             // Redireciona para o link de pagamento do PagSeguro

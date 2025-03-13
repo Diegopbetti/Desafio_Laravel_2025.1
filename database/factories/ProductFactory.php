@@ -20,7 +20,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'photo' => $this->faker->imageUrl(),
+            'photo' => 'images/celular.webp',
             'name' => $this->faker->word,
             'price' => $this->faker->randomFloat(2, 100, 5000),
             'quantity' => 1,

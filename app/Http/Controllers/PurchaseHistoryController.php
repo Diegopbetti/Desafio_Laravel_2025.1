@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class PurchaseHistoryController extends Controller
 {
     public function __invoke(){
-        return view('purchase_history');
+        $purchases = Transaction::where('buyer_id', auth()->id())->with('product')->get();
+
+        return view('purchase_history', compact('purchases'));
     }
 }
