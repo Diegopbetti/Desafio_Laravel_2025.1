@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_id')->unique(); 
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('buyer_id');
             $table->unsignedInteger('product_quantity');
+            $table->decimal('total_price', 10, 2);
+            $table->tinyInteger('status')->default(1);
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
 

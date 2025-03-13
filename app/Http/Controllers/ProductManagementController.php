@@ -25,6 +25,7 @@ class ProductManagementController extends Controller
         $product->name = $request->name;
         $product->category = $request->category;
         $product->price = $request->price;
+        $product->quantity = 1;
         $product->description = $request->description;
         $product->announcer_id = auth()->id();
 

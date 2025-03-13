@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductManagementController;
 use App\Http\Controllers\WithdrawController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\SalesHistoryController;
+use App\Http\Controllers\PagSeguroController;
+
 use App\Http\Middleware\AdminMiddleware;
 
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,10 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
+Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);
+Route::get('/erro', function(){
+    return view('erro');
+})->name('erro');
 
 Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
 Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
