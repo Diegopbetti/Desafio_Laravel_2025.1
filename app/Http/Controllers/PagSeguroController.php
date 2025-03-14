@@ -20,6 +20,16 @@ class PagSeguroController extends Controller
         // Recupera o produto
         $product = Product::findOrFail($request->input('product_id'));
 
+        //Pega o Id de quem está comprando
+        $buyerId = auth()->id();
+
+        //Impede que o comprador e o vendedor sejam o mesmo user
+        if ($product->announcer_id == $buyerId) {
+            return redirect()->back()->withErrors([
+                'error' => 'Você não pode comprar seu próprio produto.'
+            ]);
+        }
+        
         // Calcula o preço total
         $totalPrice = $product->price * $request->input('quantity');
 

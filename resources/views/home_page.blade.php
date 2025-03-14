@@ -38,7 +38,7 @@
                     <span class="ml-1 font-bold">{{ $product->name }}</span>
                     <span class="mr-1 text-right">${{ $product->price }}</span>  
                 </div>
-                <form action="/checkout" method="POST">
+                <form action="/checkout" method="POST" onsubmit="return verificarCompra(event, {{ $product->announcer_id }})">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <input type="hidden" name="quantity" value="1">
@@ -46,7 +46,7 @@
                         <a href="{{ route('individual_page', $product->id) }}}" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Visualizar</a>                         
                         <button type="submit" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Comprar</button>
                     </div>
-                </form>
+                </form>                
             </div>
         </div>
         @endforeach
@@ -74,3 +74,16 @@
     </div>
 
 </body>
+<script>
+    function verificarCompra(event, sellerId) {
+        const userId = {{ auth()->id() ?? 'null' }}; 
+        
+        if (userId === sellerId) {
+            event.preventDefault(); 
+            alert("Você não pode comprar seu próprio produto!");
+            return false;
+        }
+        return true;
+    }
+</script>
+</html>

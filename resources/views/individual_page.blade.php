@@ -24,7 +24,7 @@
                     <div class="">Autor: {{$product->announcer->name}}</div>
                     <div class="mt-3 ">Contato: {{$product->announcer->telephone}}</div>
                 </div>
-                <form action="/checkout" method="POST">
+                <form action="/checkout" method="POST" onsubmit="return verificarCompra(event, {{ $product->announcer_id }})">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="text-2xl">
@@ -37,4 +37,16 @@
         </div>
     </div>
 </body>
+<script>
+    function verificarCompra(event, sellerId) {
+        const userId = {{ auth()->id() ?? 'null' }}; 
+        
+        if (userId === sellerId) {
+            event.preventDefault(); 
+            alert("Você não pode comprar seu próprio produto!");
+            return false;
+        }
+        return true;
+    }
+</script>
 </html>

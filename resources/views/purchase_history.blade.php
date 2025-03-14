@@ -12,7 +12,19 @@
         <div class="flex text-blue-950 text-6xl justify-center max-w-[1058px] w-full font-bold mt-16 mb-36">
             Histórico de compras        
         </div>
-
+        <div class="max-w-[1058px] w-full flex flex-col items-center mb-6">
+            <form method="GET" action="{{ route('compras.pdf') }}" target="_blank" class="flex space-x-4 items-center">
+                <label for="start_date" class="text-blue-950 font-medium">Início:</label>
+                <input type="date" name="start_date" id="start_date" class="border rounded p-1 text-black">
+                
+                <label for="end_date" class="text-blue-950 font-medium">Fim:</label>
+                <input type="date" name="end_date" id="end_date" class="border rounded p-1 text-black">
+                
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md transition-transform duration-300 hover:scale-110">
+                    Gerar PDF
+                </button>
+            </form>
+        </div>
         <!-- Tabela -->
         <div class="max-w-[1058px] w-full">
             <table class="w-full overflow-hidden text-white rounded-[10px] border-collapse">
@@ -22,8 +34,6 @@
                         <th class="px-3 py-2 text-center">Photo</th>
                         <th class="px-3 py-2 text-center">Date of purchase</th>
                         <th class="px-3 py-2 text-center">Price</th>
-                        <th class="px-3 py-2 text-center">Report</th>
-
                     </tr>
                 </thead>
                 <tbody class="bg-blue-950">
@@ -37,9 +47,6 @@
                             </td>
                             <td class="px-3 py-2 text-center">{{ $purchase->date->format('d/m/Y') }}</td>
                             <td class="px-3 py-2 text-center">R${{ number_format($purchase->total_price, 2, ',', '.') }}</td>
-                            <td class="px-3 py-2 text-center">
-                                <a href="#" class=" text-white px-4 py-2 rounded-md underline">Gerar PDF</a>
-                            </td>
                         </tr>   
                         <div id="modal-{{ $purchase->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center">
                             <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">

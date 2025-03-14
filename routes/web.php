@@ -10,6 +10,10 @@ use App\Http\Controllers\WithdrawController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\SalesHistoryController;
 use App\Http\Controllers\PagSeguroController;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 use App\Http\Middleware\AdminMiddleware;
 
@@ -66,4 +70,37 @@ Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdra
 Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
 Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
 
-require __DIR__.'/auth.php';    
+//PDF
+Route::get('/compras/pdf', function (Request $request) {
+    $user = Auth::user();
+
+    $query = Transaction::with(['product', 'seller'])
+                ->where('buyer_id', $user->id);
+
+    if ($request->has('start_date') && $request->has('end_date')) {
+        $query->whereBetween('date', [$request->start_date, $request->end_date]);
+    }
+
+    $transactions = $query->get();
+
+    $pdf = PDF::loadView('pdf.compras', compact('transactions'));
+    return $pdf->stream('historico_compras.pdf');
+})->name('compras.pdf');
+
+Route::get('/vendas/pdf', function (Request $request) {
+    $user = Auth::user();
+
+    $query = Transaction::with(['product', 'buyer'])
+                ->where('seller_id', $user->id);
+
+    if ($request->has('start_date') && $request->has('end_date')) {
+        $query->whereBetween('date', [$request->start_date, $request->end_date]);
+    }
+
+    $transactions = $query->get();
+
+    $pdf = PDF::loadView('pdf.vendas', compact('transactions'));
+    return $pdf->stream('historico_vendas.pdf');
+})->name('vendas.pdf');
+
+require __DIR__.'/auth.php';   
