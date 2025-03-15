@@ -42,10 +42,16 @@ class AdminManagementController extends Controller
         return redirect()->route('admin_management');
     }
     public function update(Request $request, $id){
+        if (auth()->id() !== (int) $id) {
+            return redirect()->back()->withErrors([
+                'error' => 'Você não pode editar a conta de outro administrador.'
+            ]);
+        }
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:admins,email,' . $id,
-            'password' => 'required|string:min:8',
+            'password' => 'required|string|min:8',
             'address' => 'required|string',
             'telephone' => 'required|string|max:15',
             'birth_date' => 'required|date',
@@ -72,6 +78,13 @@ class AdminManagementController extends Controller
     }
 
     public function destroy($id){
+        
+        if (auth()->id() !== (int) $id) {
+            return redirect()->back()->withErrors([
+                'error' => 'Você não pode excluir a conta de outro administrador.'
+            ]);
+        }
+        
         $admin = Admin::find($id);
         $admin->delete();
 
