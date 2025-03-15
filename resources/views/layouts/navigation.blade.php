@@ -11,18 +11,34 @@
                     <x-nav-link :href="route('home_page')" :active="request()->routeIs('home_page')">
                         {{ __('Home Page') }}
                     </x-nav-link>
+                @if (auth('web')->check())           
                     <x-nav-link :href="route('withdraw')" :active="request()->routeIs('withdraw')">
                         {{ __('Saque') }}
                     </x-nav-link>
+                @endif   
+                @if (auth('admin')->check())           
                     <x-nav-link :href="route('user_management')" :active="request()->routeIs('user_management')">
                         {{ __('User Management') }}
                     </x-nav-link>
+                @endif   
+                @if (auth('web')->check())           
+                    <x-nav-link :href="route('user_profile')" :active="request()->routeIs('user_profile')">
+                        {{ __('User Profile') }}
+                    </x-nav-link>
+                @endif  
+                @if (auth('admin')->check())           
+                    <x-nav-link :href="route('admin_management')" :active="request()->routeIs('admin_management')">
+                        {{ __('Admin Management') }}
+                    </x-nav-link>
+                @endif   
                     <x-nav-link :href="route('product_management')" :active="request()->routeIs('product_management')">
                         {{ __('Product Management') }}
                     </x-nav-link>
+                @if (auth('web')->check())           
                     <x-nav-link :href="route('purchase_history')" :active="request()->routeIs('purchase_history')">
                         {{ __('Purchase History') }}
                     </x-nav-link>
+                    @endif   
                     <x-nav-link :href="route('sales_history')" :active="request()->routeIs('sales_history')">
                         {{ __('Sales History') }}
                     </x-nav-link>

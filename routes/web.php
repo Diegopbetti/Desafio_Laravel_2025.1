@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\IndividualPageController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminManagementController;
 use App\Http\Controllers\ProductManagementController;
 use App\Http\Controllers\WithdrawController;
@@ -51,6 +52,10 @@ Route::get('/user_management', [UserManagementController::class, 'index'])->name
 Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
 Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
 Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
+
+Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user_profile');
+Route::put('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
+Route::delete('/user/profile/delete', [UserProfileController::class, 'destroy'])->name('user_profile.destroy');
 
 Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
 Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
