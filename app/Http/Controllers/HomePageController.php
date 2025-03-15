@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 
 use Illuminate\Http\Request;
@@ -9,6 +10,10 @@ class HomePageController extends Controller
 {
     public function index(Request $request){
         $query = Product::query();
+
+        if (Auth::check()) {
+            $query->where('announcer_id', '!=', Auth::id());
+        }
 
         if ($request->has('search') && $request->search != '') {
             $query->where('name', 'like', '%' . $request->search . '%');

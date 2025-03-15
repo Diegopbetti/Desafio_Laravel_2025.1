@@ -38,15 +38,17 @@
                     <span class="ml-1 font-bold">{{ $product->name }}</span>
                     <span class="mr-1 text-right">${{ $product->price }}</span>  
                 </div>
-                <form action="/checkout" method="POST" onsubmit="return verificarCompra(event, {{ $product->announcer_id }})">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <input type="hidden" name="quantity" value="1">
-                    <div class="flex justify-between w-full mt-4">
-                        <a href="{{ route('individual_page', $product->id) }}}" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Visualizar</a>                         
-                        <button type="submit" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Comprar</button>
-                    </div>
-                </form>                
+                <div class="flex justify-between w-full mt-4">
+                    <a href="{{ route('individual_page', $product->id) }}}" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Visualizar</a>                         
+                    @if (auth('web')->check())       
+                        <form action="/checkout" method="POST" onsubmit="return verificarCompra(event, {{ $product->announcer_id }})">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="bg-blue-500 w-20 py-1 rounded-full text-xs font-bold text-center transition-transform duration-300 hover:scale-110">Comprar</button>
+                        </form>                
+                    @endif
+                </div>
             </div>
         </div>
         @endforeach

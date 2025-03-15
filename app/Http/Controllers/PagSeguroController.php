@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -17,10 +18,8 @@ class PagSeguroController extends Controller
             'quantity' => 'required|integer|min:1|max:99',
         ]);
 
-        // Recupera o produto
         $product = Product::findOrFail($request->input('product_id'));
-
-        //Pega o Id de quem está comprando
+        $seller = User::findOrFail($product->announcer_id);
         $buyerId = auth()->id();
 
         //Impede que o comprador e o vendedor sejam o mesmo user
@@ -29,9 +28,10 @@ class PagSeguroController extends Controller
                 'error' => 'Você não pode comprar seu próprio produto.'
             ]);
         }
-        
-        // Calcula o preço total
+
         $totalPrice = $product->price * $request->input('quantity');
+        
+        $seller->increment('balance', $totalPrice);
 
         $transaction = Transaction::create([
             'reference_id' => uniqid(), // Criando ID único

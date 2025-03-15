@@ -39,9 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function(){
-    Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
-});
+Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
 
 Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
 Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);

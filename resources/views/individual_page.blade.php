@@ -27,10 +27,12 @@
                 <form action="/checkout" method="POST" onsubmit="return verificarCompra(event, {{ $product->announcer_id }})">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <div class="text-2xl">
+                    <div class="text-2xl">                                
+                    @if (auth('web')->check())       
                         <span class="">Quantidade: </span>
                         <input type="number" name="quantity" min="1" max="99" value="1" class="w-16 text-center text-black mr-8">
                         <button type="submit" class="bg-blue-500 w-24 py-2 rounded-full text-lg font-bold text-center transition-transform duration-300 hover:scale-110">Comprar</button>
+                    @endif
                     </div>
                 </form>
             </div>
