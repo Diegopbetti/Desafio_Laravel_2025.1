@@ -53,7 +53,7 @@ class Contact extends Mailable
     public function content(): Content
     {
         return new Content(
-            text: 'mails.contact',
+            html: 'mails.contact',
         );
     }
 
