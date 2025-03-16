@@ -38,10 +38,15 @@
                     <x-nav-link :href="route('purchase_history')" :active="request()->routeIs('purchase_history')">
                         {{ __('Purchase History') }}
                     </x-nav-link>
-                    @endif   
+                @endif   
                     <x-nav-link :href="route('sales_history')" :active="request()->routeIs('sales_history')">
                         {{ __('Sales History') }}
                     </x-nav-link>
+                @if (auth('admin')->check())           
+                    <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contaxt.index')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                @endif 
                 </div>
             </div>
 

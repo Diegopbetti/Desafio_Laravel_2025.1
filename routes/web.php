@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\IndividualPageController;
 use App\Http\Controllers\UserManagementController;
@@ -32,6 +33,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->middleware(AdminMiddleware::class)->name('admin.dashboard'); 
+});
+
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 });
 
 Route::middleware('auth')->group(function () {
