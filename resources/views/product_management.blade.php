@@ -13,9 +13,11 @@
             <h1 class=" text-white text-[24px] bg-blue-950 px-[10%] py-[1%] rounded-[20px] mb-5 whitespace-nowrap">
                 Gerenciamento de Produtos
             </h1>
+            @if (auth('web')->check())       
             <button type="button" class="p-[1%] text-[60px] leading-[25px] flex border-white mb-5 text-blue-950 cursor-pointer" onclick="abrirModal('create')">
                 +
             </button>
+            @endif
         </div>
 
         <!-- Tabela -->

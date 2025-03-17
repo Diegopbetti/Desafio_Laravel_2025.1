@@ -17,10 +17,8 @@ class UserProfileController extends Controller
      */
     public function show()
     {
-        // Obtém o usuário logado
         $user = Auth::user();
 
-        // Retorna a view 'user_profile' com os dados do usuário
         return view('user_profile', compact('user'));
     }
 
@@ -32,10 +30,8 @@ class UserProfileController extends Controller
      */
     public function update(Request $request)
     {
-        // Obtém o usuário logado
         $user = Auth::user();
 
-        // Valida os dados do formulário
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -46,7 +42,6 @@ class UserProfileController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Atualiza os dados do usuário
         $user->name = $request->name;
         $user->email = $request->email;
         $user->address = $request->address;
@@ -54,22 +49,17 @@ class UserProfileController extends Controller
         $user->birth_date = $request->birth_date;
         $user->cpf = $request->cpf;
 
-        // Atualiza a foto do usuário, se fornecida
         if ($request->hasFile('photo')) {
-            // Exclui a foto antiga, se existir
             if ($user->photo && Storage::exists($user->photo)) {
                 Storage::delete($user->photo);
             }
 
-            // Armazena a nova foto
             $photoPath = $request->file('photo')->store('users/photos', 'public');
             $user->photo = $photoPath;
         }
 
-        // Salva as alterações no banco de dados
         $user->save();
 
-        // Redireciona de volta ao perfil com uma mensagem de sucesso
         return redirect()->route('user_profile')->with('success', 'Perfil atualizado com sucesso!');
     }
 
@@ -80,21 +70,16 @@ class UserProfileController extends Controller
      */
     public function destroy()
     {
-        // Obtém o usuário logado
         $user = Auth::user();
 
-        // Exclui a foto do usuário, se existir
         if ($user->photo && Storage::exists($user->photo)) {
             Storage::delete($user->photo);
         }
 
-        // Exclui o usuário do banco de dados
         $user->delete();
 
-        // Faz logout do usuário
         Auth::logout();
 
-        // Redireciona para a página inicial com uma mensagem de sucesso
         return redirect()->route('home')->with('success', 'Sua conta foi excluída com sucesso.');
     }
 }

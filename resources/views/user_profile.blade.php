@@ -51,7 +51,7 @@
             <button onclick="abrirModal('edit-{{ auth()->id() }}')" class="bg-[#FFC739] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
                 Editar
             </button>
-            <button onclick="abrirModal({{ auth()->id() }}, 'user')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
+            <button onclick="abrirModal('delete')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
                 Excluir
             </button>
         </div>
@@ -60,7 +60,7 @@
     <div id="edit-{{ auth()->id() }}" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Editar Usuário</h2>
-            <form action="{{ route('user.update', auth()->id()) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('user_profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="space-y-4">
@@ -110,7 +110,7 @@
     <div id="delete" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Excluir Usuário</h2>
-            <form id="deleteForm" action="{{ route('user.destroy', auth()->id()) }}" method="POST">
+            <form id="deleteForm" action="{{ route('user_profile.destroy') }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="flex justify-between mt-4">

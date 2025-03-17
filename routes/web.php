@@ -17,6 +17,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
+use App\Http\Middleware\AutenticadoMiddleware;
+
 use App\Http\Middleware\AdminMiddleware;
 
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+Route::get('/home', function () {
+    return redirect()->route('login');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -39,12 +45,15 @@ Route::get('/erro', function(){
     return view('erro');
 })->name('erro');
 
-Route::middleware('auth')->group(function () {
-    // Rotas acessíveis para ambos (admin e user)
+Route::middleware(AutenticadoMiddleware::class)->group(function () {
     Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
     Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
     Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);
     Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
+    Route::post('/product', [ProductManagementController::class, 'store'])->name('product.store');
+    Route::put('/product/{id}', [ProductManagementController::class, 'update'])->name('product.update');
+    Route::delete('/product/{id}', [ProductManagementController::class, 'destroy'])->name('product.destroy');
+
     Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
 
     Route::middleware('web')->group(function () {
@@ -56,18 +65,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/user/profile/delete', [UserProfileController::class, 'destroy'])->name('user_profile.destroy');
     });
 
-    Route::middleware('admin')->group(function () {
-        Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-        Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
-        Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
-        Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
-        Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
-        Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
-        Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
-        Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admin.update');
-        Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
-    });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -104,6 +101,19 @@ Route::middleware('auth')->group(function () {
         $pdf = PDF::loadView('pdf.vendas', compact('transactions'));
         return $pdf->stream('historico_vendas.pdf');
     })->name('vendas.pdf');
+});
+
+Route::middleware(AdminMiddleware::class)->group(function () {
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
+    Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
+    Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
+    Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
+    Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
+    Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admin.update');
+    Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
 });
 
 require __DIR__.'/auth.php';   
