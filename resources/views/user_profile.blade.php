@@ -10,7 +10,6 @@
     <div class="bg-white p-8 rounded-lg shadow-lg w-1/3">
         <h2 class="text-2xl font-bold mb-6 text-center">Perfil do Usuário</h2>
         
-        <!-- Informações do Usuário -->
         <div class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">Nome</label>
@@ -48,18 +47,16 @@
             </div>
         </div>
 
-        <!-- Botões de Ação -->
         <div class="flex justify-between mt-6">
             <button onclick="abrirModal('edit-{{ auth()->id() }}')" class="bg-[#FFC739] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
                 Editar
             </button>
-            <button onclick="abrirModalDelete({{ auth()->id() }}, 'user')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
+            <button onclick="abrirModal({{ auth()->id() }}, 'user')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">
                 Excluir
             </button>
         </div>
     </div>
 
-    <!-- Modal de Edição (Incluído diretamente na página) -->
     <div id="edit-{{ auth()->id() }}" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Editar Usuário</h2>
@@ -110,7 +107,6 @@
         </div>
     </div>
 
-    <!-- Modal de Exclusão (Incluído diretamente na página) -->
     <div id="delete" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 shadow-lg">
             <h2 class="text-xl font-bold mb-4">Excluir Usuário</h2>
@@ -138,17 +134,7 @@
             document.getElementById(idModal).style.display = "none";
         }
 
-        function abrirModalDelete(userId, tipo) {
-            let form = document.getElementById("deleteForm");
-
-            if (tipo === "admin") {
-                form.action = "/admin/" + userId; 
-            } else {
-                form.action = "/user/" + userId;
-            }
-
-            abrirModal('delete');
-        }
+        
     </script>
 </body>
 </html>

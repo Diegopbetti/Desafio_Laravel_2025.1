@@ -35,81 +35,75 @@ Route::prefix('admin')->group(function () {
     })->middleware(AdminMiddleware::class)->name('admin.dashboard'); 
 });
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
-
-Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
-Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);
 Route::get('/erro', function(){
     return view('erro');
 })->name('erro');
 
-Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
-Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
-Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
-Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
+Route::middleware('auth')->group(function () {
+    // Rotas acessíveis para ambos (admin e user)
+    Route::get('/home_page', [HomePageController::class, 'index'])->name('home_page');
+    Route::get('/product/{id}', [IndividualPageController::class, 'show'])->name('individual_page');
+    Route::post('/checkout', [PagSeguroController::class, 'createCheckout']);
+    Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
+    Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
 
-Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user_profile');
-Route::put('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
-Route::delete('/user/profile/delete', [UserProfileController::class, 'destroy'])->name('user_profile.destroy');
+    Route::middleware('web')->group(function () {
+        Route::get('/withdraw', WithdrawController::class)->name('withdraw');
+        Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.process');
+        Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
+        Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user_profile');
+        Route::put('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
+        Route::delete('/user/profile/delete', [UserProfileController::class, 'destroy'])->name('user_profile.destroy');
+    });
 
-Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
-Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
-Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admin.update');
-Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
+    Route::middleware('admin')->group(function () {
+        Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+        Route::get('/user_management', [UserManagementController::class, 'index'])->name('user_management');
+        Route::post('/user', [UserManagementController::class, 'store'])->name('user.store');
+        Route::put('/user/{id}', [UserManagementController::class, 'update'])->name('user.update');
+        Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
+        Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
+        Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
+        Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admin.update');
+        Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
+    });
 
-Route::get('/product_management', [ProductManagementController::class, 'index'])->name('product_management');
-Route::post('/product', [ProductManagementController::class, 'store'])->name('product.store');
-Route::put('/product/{id}', [ProductManagementController::class, 'update'])->name('product.update');
-Route::delete('/product/{id}', [ProductManagementController::class, 'destroy'])->name('product.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-Route::get('/withdraw', WithdrawController::class)->name('withdraw');
-Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.process');
+    Route::get('/compras/pdf', function (Request $request) {
+        $user = Auth::user();
 
-Route::get('/purchase_history', PurchaseHistoryController::class)->name('purchase_history');
-Route::get('/sales_history', SalesHistoryController::class)->name('sales_history');
+        $query = Transaction::with(['product', 'seller'])
+                    ->where('buyer_id', $user->id);
 
-//PDF
-Route::get('/compras/pdf', function (Request $request) {
-    $user = Auth::user();
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('date', [$request->start_date, $request->end_date]);
+        }
 
-    $query = Transaction::with(['product', 'seller'])
-                ->where('buyer_id', $user->id);
+        $transactions = $query->get();
 
-    if ($request->has('start_date') && $request->has('end_date')) {
-        $query->whereBetween('date', [$request->start_date, $request->end_date]);
-    }
+        $pdf = PDF::loadView('pdf.compras', compact('transactions'));
+        return $pdf->stream('historico_compras.pdf');
+    })->name('compras.pdf');
 
-    $transactions = $query->get();
+    Route::get('/vendas/pdf', function (Request $request) {
+        $user = Auth::user();
 
-    $pdf = PDF::loadView('pdf.compras', compact('transactions'));
-    return $pdf->stream('historico_compras.pdf');
-})->name('compras.pdf');
+        $query = Transaction::with(['product', 'buyer'])
+                    ->where('seller_id', $user->id);
 
-Route::get('/vendas/pdf', function (Request $request) {
-    $user = Auth::user();
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('date', [$request->start_date, $request->end_date]);
+        }
 
-    $query = Transaction::with(['product', 'buyer'])
-                ->where('seller_id', $user->id);
+        $transactions = $query->get();
 
-    if ($request->has('start_date') && $request->has('end_date')) {
-        $query->whereBetween('date', [$request->start_date, $request->end_date]);
-    }
-
-    $transactions = $query->get();
-
-    $pdf = PDF::loadView('pdf.vendas', compact('transactions'));
-    return $pdf->stream('historico_vendas.pdf');
-})->name('vendas.pdf');
+        $pdf = PDF::loadView('pdf.vendas', compact('transactions'));
+        return $pdf->stream('historico_vendas.pdf');
+    })->name('vendas.pdf');
+});
 
 require __DIR__.'/auth.php';   
