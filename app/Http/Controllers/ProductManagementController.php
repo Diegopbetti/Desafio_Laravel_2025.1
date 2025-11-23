@@ -30,7 +30,7 @@ class ProductManagementController extends Controller
         $product->announcer_id = auth()->id();
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('images/products', 'public');
+            $photoPath = $request->file('photo')->store('product_images', 'public');
             $product->photo = $photoPath;
         }
 

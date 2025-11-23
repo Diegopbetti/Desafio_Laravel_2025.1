@@ -9,7 +9,7 @@
 <body class="h-screen w-full flex justify-center items-center">
     <div class="flex justify-center items-center bg-blue-950 w-11/12 h-5/6 rounded-2xl text-white">
         <div class="w-1/2 h-full flex justify-center items-center">
-            <img src="{{ asset($product->photo) }}" class="w-5/6 h-5/6 rounded-lg object-cover">
+            <img src="{{ asset('storage/' . $product->photo) }}" class="w-5/6 h-5/6 rounded-lg object-cover">
         </div>
         <div class="flex flex-col justify-center items-center w-1/2 h-full">
             <div class="w-96 mb-10">

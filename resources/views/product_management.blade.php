@@ -43,8 +43,11 @@
                         <td class="px-3 py-2 text-center">{{ $product->announcer->name }}</td>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('view-{{ $product->id }}')"></button></th>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('edit-{{ $product->id }}')"></button></th>
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete')"></button></th>                     
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete-{{$product->id}}')"></button></th>                     
                     </tr>
+                    @include('ModaisProduct.modal_viewProduct')
+                    @include('ModaisProduct.modal_editProduct')
+                    @include('ModaisProduct.modal_deleteProduct')
                     @endforeach
                 </tbody>
             </table>
@@ -72,9 +75,6 @@
         </div>
         
         @include('ModaisProduct.modal_createProduct')
-        @include('ModaisProduct.modal_viewProduct')
-        @include('ModaisProduct.modal_editProduct')
-        @include('ModaisProduct.modal_deleteProduct')
     </main>
     <script>
         function abrirModal(idModal){

@@ -15,7 +15,7 @@
                 <div class="mb-2 flex justify-between items-center">
                     <div class="flex items-center">
                         <input type="text" name="announcer" placeholder="Announcer" class="border p-2 w-1/2 mb-2 rounded" value="{{ $product->announcer->name }}" readonly>
-                        <img src="{{ asset($product->photo) }}" alt="Foto do produto" class="w-12 h-12 rounded-full object-cover ml-4">
+                        <img src="{{ asset('storage/' . $product->photo) }}" alt="Foto do produto" class="w-12 h-12 rounded-full object-cover ml-4">
                     </div>
                 </div>
                 <input type="text" name="name" placeholder="Name" class="border p-2 w-full mb-2 rounded" value="{{ $product->name }}" readonly>

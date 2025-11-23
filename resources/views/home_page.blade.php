@@ -32,7 +32,7 @@
     <div class="grid grid-cols-3 gap-x-5 gap-y-5 w-1/2 mt-12">
         @foreach($products as $product)
         <div class="flex flex-col items-center bg-blue-950 w-48 rounded-xl p-3">
-            <img src="{{ asset($product->photo) }}" alt="{{$product->name}}" class="w-48 h-40 rounded-xl object-contain">     
+            <img src="{{ asset('storage/' . $product->photo) }}" alt="{{$product->name}}" class="w-48 h-40 rounded-xl object-contain">
             <div class="flex flex-col w-full text-white mt-3">
                 <div class="flex justify-between items-center w-full">
                     <span class="ml-1 font-bold">{{ $product->name }}</span>
