@@ -50,7 +50,7 @@
                         </tr> 
                         <div id="modal-{{ $sale->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center">
                             <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
-                                <img src="{{ asset($sale->product->photo) }}" alt="Product Image" class="w-96 mr-12 h-auto rounded-md">
+                                <img src="{{ asset('storage/' . $sale->product->photo) }}" alt="Product Image" class="w-96 mr-12 h-auto rounded-md">
                                 <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md" 
                                     onclick="fecharModal('modal-{{ $sale->id }}')">
                                     Fechar

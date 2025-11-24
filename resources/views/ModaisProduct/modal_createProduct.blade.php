@@ -16,7 +16,7 @@
                 <input type="text" name="name" placeholder="Name" class="border p-2 w-full mb-2 rounded" required>
                 <div class="flex">
                     <input type="text" name="category" placeholder="Category" class="border p-2 w-1/2 mb-2 rounded" required>
-                    <input type="number" name="price" placeholder="Price" class="border p-2 w-1/2 mb-2 rounded" min="0" required>
+                    <input type="number" name="price" placeholder="Price" class="border p-2 w-1/2 mb-2 rounded" min="0" step="0.01" required>
                 </div>
                 <textarea name="description" placeholder="Description" class="border p-2 h-24 w-full mb-2 rounded resize-none" required></textarea>
                 <div class="flex justify-end mt-4">

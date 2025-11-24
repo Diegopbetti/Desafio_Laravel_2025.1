@@ -24,7 +24,7 @@
                 <div class="mb-2 flex justify-between items-center">
                     <div class="flex items-center">
                         <label class="block text-sm font-medium text-gray-700">Foto</label>
-                        <img src="{{ asset($user->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
+                        <img src="{{ asset('storage/' . $user->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
                     </div>
                     <button type="button" onclick="fecharModal('view-{{ $user->id }}')" class="ml-2 text-gray-600 hover:underline">
                         Fechar

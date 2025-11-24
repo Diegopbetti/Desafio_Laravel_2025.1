@@ -17,7 +17,7 @@
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded transition-transform hover:scale-105">
                         Excluir
                     </button>
-                    <button type="button" onclick="fecharModal('delete')" class="ml-2 text-gray-600 hover:underline">
+                    <button type="button" onclick="fecharModal('delete-{{ $user->id }}')" class="ml-2 text-gray-600 hover:underline">
                         Fechar
                     </button>
                 </div>

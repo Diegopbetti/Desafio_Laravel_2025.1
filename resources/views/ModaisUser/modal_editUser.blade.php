@@ -26,7 +26,7 @@
                 <div class="mb-2 flex justify-between items-center">
                     <div class="flex items-center">
                         <input type="file" name="photo" placeholder="Photo" class="border p-2 w-full mb-2 rounded">
-                        <img src="{{ asset($user->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
+                        <img src="{{ asset('storage/' . $user->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
                     </div>
                 </div>
                 <div class="flex justify-end mt-4">

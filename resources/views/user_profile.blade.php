@@ -43,7 +43,7 @@
             </div>
             <div class="flex items-center">
                 <label class="block text-sm font-medium text-gray-700">Foto</label>
-                <img src="{{ asset(auth()->user()->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
+                <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Foto do usuário" class="w-12 h-12 rounded-full object-cover ml-4">
             </div>
         </div>
 

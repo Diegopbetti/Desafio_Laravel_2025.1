@@ -68,18 +68,17 @@ class UserProfileController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy()
+    public function destroy(Request $request)
     {
         $user = Auth::user();
+        $oldImage = $user->photo;
 
-        if ($user->photo && Storage::exists($user->photo)) {
-            Storage::delete($user->photo);
+        if ($oldImage && Storage::disk('public')->exists($oldImage)) {
+            Storage::disk('public')->delete($oldImage);
         }
 
         $user->delete();
 
-        Auth::logout();
-
-        return redirect()->route('home')->with('success', 'Sua conta foi excluída com sucesso.');
+        return redirect()->route('home');
     }
 }
