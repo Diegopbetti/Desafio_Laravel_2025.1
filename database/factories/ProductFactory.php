@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 100, 5000),
             'quantity' => 1,
             'description' => $this->faker->sentence,
-            'category' => fake()->unique()->randomElement(['Celulares', 'Computadores', 'Tablets', 'Câmeras', 'TVs']),
+            'category' => fake()->randomElement(['Celulares', 'Computadores', 'Tablets', 'Câmeras', 'TVs']),
             'announcer_id' => User::inRandomOrder()->first()->id,
         ];
     }

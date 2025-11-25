@@ -112,8 +112,8 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::delete('/user/{id}', [UserManagementController::class, 'destroy'])->name('user.destroy');
     Route::get('/admin_management', [AdminManagementController::class, 'index'])->name('admin_management');
     Route::post('/admin', [AdminManagementController::class, 'store'])->name('admin.store');
-    Route::put('/admin/{id}', [AdminManagementController::class, 'update'])->name('admin.update');
-    Route::delete('/admin/{id}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
+    Route::put('/admin/edit/{admin}', [AdminManagementController::class, 'update'])->name('admin.update');
+    Route::delete('/admin/delete/{admin}', [AdminManagementController::class, 'destroy'])->name('admin.destroy');
 });
 
 require __DIR__.'/auth.php';   

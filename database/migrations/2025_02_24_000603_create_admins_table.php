@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('birth_date')->required();
             $table->string('cpf')->unique()->required();
             $table->string('photo')->required();
+            $table->foreignId('admin_id')->nullable()->constrained()->onDelete('set null' );
         });
     }
 

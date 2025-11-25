@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\Admin;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin>
@@ -31,7 +32,7 @@ class AdminFactory extends Factory
             'birth_date' => $this->faker->date(),
             'cpf' => $this->faker->unique()->numerify('###########'),
             'photo' => $this->faker->imageUrl(),
-
+            'admin_id' => Admin::inRandomOrder()->value('id'),
         ];
     }
 }

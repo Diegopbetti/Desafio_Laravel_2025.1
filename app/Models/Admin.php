@@ -24,6 +24,7 @@ class Admin extends Authenticatable
         'birth_date',
         'cpf',
         'photo',
+        'admin_id',
     ];
 
     /**
@@ -47,5 +48,9 @@ class Admin extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function creator(){
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminManagementController extends Controller
 {
@@ -13,81 +14,59 @@ class AdminManagementController extends Controller
         return view('admin_management', compact('admins'));
     }
     public function store(Request $request){
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:admins,email,',
-            'password' => 'required|string|min:8',
-            'address' => 'required|string',
-            'telephone' => 'required|string|max:15',
-            'birth_date' => 'required|date',
-            'cpf' => 'required|string|max:14',
-            'photo' => 'required|image',
-        ]);
-        $admin = new Admin();
-        $admin->name = $request->name;
-        $admin->email = $request->email;
-        $admin->password = bcrypt($request->password);
-        $admin->address = $request->address;
-        $admin->telephone = $request->telephone;
-        $admin->birth_date = $request->birth_date;
-        $admin->cpf = $request->cpf; 
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('images/admins', 'public');
-            $admin->photo = $photoPath;
+        } else {
+            $photoPath = null;
         }
 
-        $admin->save();
+        Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'address' => $request->address,
+            'telephone' => $request->telephone,
+            'birth_date' => $request->birth_date,
+            'cpf' => $request->cpf, 
+            'photo' => $photoPath,
+            'admin_id' => auth('admin')->id(),
+        ]);
 
         return redirect()->route('admin_management');
     }
-    public function update(Request $request, $id){
-        if (auth()->id() !== (int) $id) {
-            return redirect()->back()->withErrors([
-                'error' => 'Você não pode editar a conta de outro administrador.'
-            ]);
+    public function update(Admin $admin, Request $request){
+        $loggedInAdminId = auth('admin')->id();
+        if ($loggedInAdminId !== $admin->id && $loggedInAdminId !== $admin->admin_id) {
+            return redirect()->back()->withErrors(['error' => 'Você não tem permissão para editar este administrador.']);
         }
 
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:admins,email,' . $id,
-            'password' => 'required|string|min:8',
-            'address' => 'required|string',
-            'telephone' => 'required|string|max:15',
-            'birth_date' => 'required|date',
-            'cpf' => 'required|string|max:14',
-            'photo' => 'required|image',
-        ]);
-
-        $admin = Admin::find($id);
-        $admin->name = $request->name;
-        $admin->email = $request->email;
-        $admin->password = bcrypt($request->password);
-        $admin->address = $request->address;
-        $admin->telephone = $request->telephone;
-        $admin->birth_date = $request->birth_date;
-        $admin->cpf = $request->cpf; 
+        $data = $request->except('photo');
+        $admin->update($data);
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('images/admins', 'public');
-            $admin->photo = $photoPath;
+            $oldImage = $admin->photo;
+
+            if ($oldImage && Storage::disk('public')->exists($oldImage)) {
+                Storage::disk('public')->delete($oldImage);
+            }
+
+            $admin->update([
+                'photo' => $photoPath,
+            ]);
         }
-        $admin->save();
 
         return redirect()->route('admin_management');
     }
 
-    public function destroy($id){
-        
-        if (auth()->id() !== (int) $id) {
-            return redirect()->back()->withErrors([
-                'error' => 'Você não pode excluir a conta de outro administrador.'
-            ]);
+    public function destroy(Admin $admin){
+        $loggedInAdminId = auth('admin')->id();
+        if ($loggedInAdminId !== $admin->id && $loggedInAdminId !== $admin->admin_id) {
+            return redirect()->back()->withErrors(['error' => 'Você não tem permissão para excluir este administrador.']);
         }
-        
-        $admin = Admin::find($id);
-        $admin->delete();
 
-        return redirect()->route('admin_management');
+        $admin->delete(); 
+        return redirect()->back();
     }
 }

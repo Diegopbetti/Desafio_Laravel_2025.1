@@ -40,16 +40,19 @@
                         <td class="px-3 py-2 text-center">{{$admin->email}}</td>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('view-{{ $admin->id }}')"></button></th>
                         <th class="px-3 py-2 text-center">
-                            @if (Auth::guard('admin')->user()->id === $admin->id)              
+                            @if (auth('admin')->id() === $admin->id || auth('admin')->id() === $admin->admin_id)
                                 <button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('edit-{{ $admin->id }}')"></button>
                             @endif
                         </th>
                         <th class="px-3 py-2 text-center">
-                            @if (Auth::guard('admin')->user()->id === $admin->id)              
-                                <button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete')"></button>
+                            @if (auth('admin')->id() === $admin->id || auth('admin')->id() === $admin->admin_id)
+                                <button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete-{{ $admin->id }}')"></button>
                             @endif
                         </th>
                     </tr>
+                    @include('ModaisAdmin.modal_viewAdmin')
+                    @include('ModaisAdmin.modal_editAdmin')
+                    @include('ModaisAdmin.modal_deleteAdmin')
                     @endforeach
                 </tbody>
             </table>
@@ -77,9 +80,6 @@
         </div>
         
         @include('ModaisAdmin.modal_createAdmin')
-        @include('ModaisAdmin.modal_viewAdmin')
-        @include('ModaisAdmin.modal_editAdmin')
-        @include('ModaisAdmin.modal_deleteAdmin')
     </main>
     
     <script>
