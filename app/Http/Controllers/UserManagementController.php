@@ -14,58 +14,43 @@ class UserManagementController extends Controller
     }
 
     public function store(Request $request){
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,',
-            'password' => 'required|string|min:8',
-            'address' => 'required|string',
-            'telephone' => 'required|string|max:15',
-            'birth_date' => 'required|date',
-            'cpf' => 'required|string|max:14',
-            'balance' => 'required|numeric',
-            'photo' => 'nullable|image',
-        ]);
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->address = $request->address;
-        $user->telephone = $request->telephone;
-        $user->birth_date = $request->birth_date;
-        $user->cpf = $request->cpf; 
-        $user->balance = 0;
-
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('images/users', 'public');
-            $user->photo = $photoPath;
+        } else {
+            $photoPath = null;
         }
 
-        $user->save();
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'address' => $request->address,
+            'telephone' => $request->telephone,
+            'birth_date' => $request->birth_date,
+            'cpf' => $request->cpf, 
+            'photo' => $photoPath,
+        ]);
 
         return redirect()->route('user_management');
     }
     public function update(Request $request, $id){
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'required|string:min:8',
-            'address' => 'required|string',
-            'telephone' => 'required|string|max:15',
-            'birth_date' => 'required|date',
-            'cpf' => 'required|string|max:14',
-            'balance' => 'required|numeric',
-            'photo' => 'nullable|image',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'address' => 'nullable|string|max:255',
+            'telephone' => 'nullable|string|max:20',
+            'birth_date' => 'nullable|date',
+            'cpf' => 'nullable|string|max:14',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
         $user->address = $request->address;
         $user->telephone = $request->telephone;
         $user->birth_date = $request->birth_date;
         $user->cpf = $request->cpf; 
-        $user->balance = $request->balance;
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('images/users', 'public');

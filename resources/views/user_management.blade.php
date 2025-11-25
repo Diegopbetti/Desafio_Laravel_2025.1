@@ -40,8 +40,11 @@
                         <td class="px-3 py-2 text-center">{{$user->email}}</td>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#00AEA0] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('view-{{ $user->id }}')"></button></th>
                         <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#FFC739] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('edit-{{ $user->id }}')"></button></th>
-                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete')"></button></th>
+                        <th class="px-3 py-2 text-center"><button class="btn-acao bg-[#C70E3C] inline-flex items-center justify-center w-[20px] h-[20px] rounded-md border-none mt-1 cursor-pointer" onclick="abrirModal('delete-{{ $user->id }}')"></button></th>
                     </tr>
+                    @include('ModaisUser.modal_viewUser')
+                    @include('ModaisUser.modal_editUser')
+                    @include('ModaisUser.modal_deleteUser')
                     @endforeach
                 </tbody>
             </table>
@@ -69,9 +72,6 @@
         </div>
         
         @include('ModaisUser.modal_createUser')
-        @include('ModaisUser.modal_viewUser')
-        @include('ModaisUser.modal_editUser')
-        @include('ModaisUser.modal_deleteUser')
     </main>
     
     <script>

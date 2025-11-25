@@ -54,7 +54,7 @@ class UserProfileController extends Controller
                 Storage::delete($user->photo);
             }
 
-            $photoPath = $request->file('photo')->store('users/photos', 'public');
+            $photoPath = $request->file('photo')->store('images/users', 'public');
             $user->photo = $photoPath;
         }
 
