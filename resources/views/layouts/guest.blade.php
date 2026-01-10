@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div class="w-[400px] h-20 text-5xl flex justify-center font-bold fill-current text-blue-950">
+            <div class="w-[400px] h-20 text-5xl ms:w-[320px] flex justify-center font-bold fill-current text-blue-950">
                 TechMarket
             </div>
 
